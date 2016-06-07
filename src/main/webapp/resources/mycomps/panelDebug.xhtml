@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <!--========================================================================
+    *                   
+    * Created:         13.06.2015
+    * File:            dialogLogin.xthml
+    * Author:          Martin Hinrichs Copyright (2015).All rights reserved.
+    *
+    * Function:        JSF-COMPONENT           
+    * Dependecies:     <mahi:dialogLogin ..
+    *                  <.. id="myModal"  ==> in header.xhtml 
+    *
+    * Doc-Ref-Class:   This
+    *
+    * Description:     Administrations-Panel thats can be hidden by jsf rendered
+    *                  Use this Panel to place global Functions for App.
+    * 
+    *
+    =========================================================================-->
+
+    <!--    Define Attributs for the Component-User 
+            The Access at example via cc.attrs.title is special.
+            The "cc" is a reserved Word for the attributs and not related to
+            xmlns:cc=". Remember. -->
+
+    <cc:interface>
+        <!-- Just empty now -->
+    </cc:interface>
+
+    <!-- Modal - This Modal is hidden and can invoke by Jquery or a Button -->
+    <cc:implementation>
+
+        <!-- Print out Debug Meldungen , wenn javax.faces.PROJECT_STAGE auf
+             Development ist.
+             Nur anzeigen, wenn Messages vorhanden sind.
+        -->
+        <h:panelGroup styleClass="row" layout="block">
+            <h:panelGroup styleClass="col-lg-2 offset green" layout="block">
+                <h:messages />
+                <!-- Press Ctrl+Shift+d to get a Debug Window -->
+                #{facesContext.messages}
+                <ui:debug />
+            </h:panelGroup>
+        </h:panelGroup>
+    </cc:implementation>
+</html>
+

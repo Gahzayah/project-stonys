@@ -1,0 +1,213 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:mahi="http://java.sun.com/jsf/composite/mycomps"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <ui:decorate template="header.xhtml">
+            <!-- Title Definition -->
+            <title><ui:define name="title">Stonys Glas - Mehr erfahren</ui:define></title>
+        </ui:decorate>
+    </h:head>
+    <h:body>
+
+        <!-- Custom JS/CSS damit hier als letztes laden, damit sie immer funktionieren -->
+        <f:facet name="last">
+            <h:outputStylesheet library="default" name="css/global.css" />
+            <h:outputScript     library="default" name="js/global.js" target="head" />
+        </f:facet>
+        <!-- The Panel for Administration on the Top of Page for authenticated users. " -->
+        <mahi:panelAdmin user="#{loginBean.username}" 
+                         search="false" 
+                         logout="#{session.invalidate()}" 
+                         rendered="#{loginBean.isLoggedin()}" />
+        <!-- Show Debug and Validation Messages -->
+        <mahi:panelDebug rendered="#{not empty facesContext.messageList}" /> 
+
+        <div class="container-fluid" >
+            <h:panelGroup layout="block" styleClass="row header">
+                <h:panelGroup layout="block" styleClass="col-md-4 col-md-offset-2">
+                    <h1>Stonys Glas</h1>
+                    <h2>Glaswerksatt am See</h2>
+                </h:panelGroup>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" styleClass="row navigation">
+                <h:panelGroup layout="block" styleClass="col-md-8 col-md-offset-2" style="width: 840px;">
+                    <ul>
+                        <h:link outcome="index.xhtml" ><li>Start</li></h:link>
+                        <h:link outcome="stony.xhtml" ><li>Stony</li></h:link>
+                        <h:link outcome="gallerie.xhtml"><li>Galerie</li></h:link>
+                        <h:link outcome="kontakt.xhtml" ><li>Kontakt</li></h:link>
+                    </ul>
+                </h:panelGroup>
+            </h:panelGroup>
+
+            <!-- Modal -->
+            <div  id="modal-artikel" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Neuen Artikel erstellen</h4>
+                        </div>
+                        <h:form id="artForm"> 
+                            <div class="modal-body">
+                                <div class="form-group">                        
+                                    <h:outputLabel class="control-label" value="Kategorie" for="selectOneArtMain" />
+                                    <h:selectOneMenu id="selectOneArtMain" class="form-control" value="#{beanManager.artMainID}">
+                                        <f:selectItems value="#{beanManager.artMainList}" var="o" itemLabel="#{o.name}" itemValue="#{o.id}"/>
+                                    </h:selectOneMenu>
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel value="Title" class="control-label"  for="inputArticleTitle"/>
+                                    <h:inputText id="inputArticleTitle" class="form-control" value="#{beanManager.articleTitle}" />
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel value="Text" class="control-label"  for="textAreaArtMain"/>
+                                    <h:inputTextarea id="textAreaArtMain" class="form-control" value="#{beanManager.articleText}" rows="10" cols="70"/>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <h:commandButton styleClass="btn btn-primary" style="width: 30%; height: 32px; margin-right: 15px;" actionListener="#{beanManager.newArticel()}" value="Save" />
+                            </div>
+                        </h:form> 
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div  id="modal-artmain" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Neue Kategorie erstellen</h4>
+                        </div>
+                        <h:form> 
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <h:outputLabel class="control-label" value="Title"/>
+                                    <h:inputText class="form-control" value="#{beanManager.artMainName}"/>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <h:commandButton styleClass="btn btn-primary" style="width: 30%; height: 32px; margin-right: 15px;" actionListener="#{beanManager.newArtMain()}" value="Save" />
+                            </div>
+                        </h:form> 
+                    </div>
+                </div>
+            </div>
+
+
+            <h:panelGroup layout="block" styleClass="row content">
+                <h:panelGroup id="ArticleContent" layout="block" styleClass="col-md-8 col-md-offset-2" style="width:900px">
+                    <h:form id="articleForm">
+
+                        <!-- ooooooooooooooooooooooooooooooooooo Title ooooooooooooooooooooooooooooooooooooooooo -->
+                        <h:panelGroup layout="block" styleClass="col-md-8" >
+                            <!-- Nur behandeln wenn es einen StartArtikel bzw. generell einen Artikel gibt -->
+                            <c:if test="#{not empty beanManager.article.titel}">
+                                <h3 style="display: inline-block">#{beanManager.article.titel}</h3>
+                                <h:panelGroup style="float:right">
+                                    <!-- Entscheide ob der Article ein Start-Artikel ist und zeige Farbe/Symbol entsprechend -->
+                                    <c:choose>
+                                        <c:when test="#{beanManager.article.startHexRGB eq '#08A600'}" >
+                                            <h:panelGroup class="glyphicon glyphicon-ok" style="color: #{beanManager.article.startHexRGB};margin-right:5px" rendered="#{loginBean.loggedin}"/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <h:panelGroup class="glyphicon glyphicon-minus" style="color: #{beanManager.article.startHexRGB};margin-right:5px" rendered="#{loginBean.loggedin}"/>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <!-- Setze mit dem Button den Start-Artikel -->
+                                    <h:commandLink style="margin-right:10px"                                          
+                                                   value="Start-Article"
+                                                   actionListener="#{beanManager.setStartArticle()}"
+                                                   rendered="#{loginBean.loggedin}"/>
+                                    <!-- Initialize den TinyMCE Editor zum bearbeiten -->
+                                    <h:commandLink styleClass="glyphicon glyphicon-pencil" rendered="#{loginBean.loggedin}" actionListener="#{beanManager.editArticleBool()}" />
+                                </h:panelGroup>
+                            </c:if>
+
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="col-md-4" >&nbsp;</h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="col-md-12" ><hr/></h:panelGroup>
+
+                        <!-- ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
+
+                        <!-- ooooooooooooooooooooooooooooooooooo Artikel Text oooooooooooooooooooooooooooooooooooooooo -->
+                        <h:panelGroup id="articleText" layout="block" styleClass="col-md-8">
+                            <!-- Lade Inhalt -->
+                            <c:choose>
+                                <c:when test="#{loginBean.loggedin}" >  
+                                    <h:outputText value="#{beanManager.article.text}" escape="false" />
+                                    <p:editor value="#{beanManager.article.text}" rendered="#{beanManager.editArticle}"/>
+                                    <hr />
+                                    <h:commandButton value="speichern" actionListener="#{beanManager.saveThisArticle(beanManager.article)}" rendered="#{beanManager.editArticle}"/> 
+                                </c:when>
+                                <c:otherwise>
+                                    <h:outputText value="#{beanManager.article.text}" escape="false"/>
+                                </c:otherwise>
+                            </c:choose>
+                        </h:panelGroup>
+                        <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
+
+                        <!-- oooooooooooooooooooooooooooooooooooo Navigation oooooooooooooooooooooooooooooooooooooooo -->
+                        <h:panelGroup layout="block" styleClass="col-md-4 stony-about-navigation">
+                            <ul>
+                                <!-- Alle Artikel Gruppen ausgeben -->
+                                <ui:repeat value="#{beanManager.artMainList}" var="artMain">
+                                    <li>
+                                        <h:commandLink actionListener="#{beanManager.removeArtMain(artMain)}" rendered="#{loginBean.loggedin}">
+                                            <div class="glyphicon glyphicon-minus admin-remove"/>
+                                        </h:commandLink>
+                                        <h3>#{artMain.name}</h3>
+                                        <ul>
+                                            <!-- Alle enthaltenen Artikel ausgeben -->
+                                            <ui:repeat value="#{artMain.articleList}" var="art">
+                                                <li>
+                                                    <h:commandLink actionListener="#{beanManager.removeArticle(art)}" rendered="#{loginBean.loggedin}">
+                                                        <div class="glyphicon glyphicon-minus admin-remove-sub"/>
+                                                    </h:commandLink>
+                                                    <!-- Button to set  Article to Show -->
+                                                    <h:commandLink actionListener="#{beanManager.setThisArticle(art)}">
+                                                        #{art.titel}
+                                                        <f:ajax render="articleForm"/>
+                                                    </h:commandLink>
+                                                </li>
+                                            </ui:repeat>
+                                            <li>
+                                                <h:commandLink action="#{beanManager.setThisArtMain(art)}" title="Neuen Artikel hinzufügen" rendered="#{loginBean.loggedin}">
+                                                    <div class="admin-add-sub"><i class="glyphicon glyphicon-plus"/><span style="font-size: 12px;margin-left: 5px;">Neuen&#160;Artikel&#160;hinzufügen</span></div>
+                                                    <f:ajax onevent="$('#modal-artikel').modal()" render=":artForm" />
+                                                </h:commandLink>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ui:repeat>
+                                <c:if test="#{loginBean.loggedin}">
+                                    <a href="#" title="Neue Kategorie hinzufügen"><div class="admin-add" data-toggle="modal" data-target="#modal-artmain" ><i class="glyphicon glyphicon-plus"/><span style="font-size: 12px;margin-left: 5px;">Neue&nbsp;Kategorie</span></div></a>
+                                </c:if>
+                            </ul>
+                        </h:panelGroup>
+                        <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
+                    </h:form>
+                </h:panelGroup>
+            </h:panelGroup>
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                function showArtMainModal() {
+                    $('#modal-artmain').modal('show');
+                }
+            });
+        </script>
+    </h:body>
+</html>

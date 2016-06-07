@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /disappearing/
+Disallow: /soontobe404.htm
+Disallow: /gallery/Kerzenst%C3%A4nder
+Disallow: /gallery/Kerzenständer

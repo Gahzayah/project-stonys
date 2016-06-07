@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <!--========================================================================
+    *                   
+    * Created:         13.06.2015
+    * File:            Login.xthml
+    * Author:          Martin Hinrichs Copyright (2015).All rights reserved.
+    *
+    * Function:        JSF-COMPONENT           
+    * Dependecies:     <mahi:dialogLogin ..
+    *                  <.. id="myModal"  ==> in header.xhtml 
+    *
+    * Doc-Ref-Class:   This
+    *
+    * Description:     Login Dialog build with bootstrap.
+    *                  Can invoke through:
+    *                       o <Button a:data-toggle="modal" ..
+    *                       o LoginFilter Servlet (Define Filter -> web.xml)
+    *                       o URL Pattern */login (deprecated)
+    *
+    * 
+    * Style CSS Def:   width = 25 %;
+    *
+    =========================================================================-->
+
+    <!--    Define Attributs for the Component-User 
+            The Access at example via cc.attrs.title is special.
+            The "cc" is a reserved Word for the attributs and not related to
+            xmlns:cc=". Remember. -->
+
+    <cc:interface>
+
+        <cc:attribute name="title"         default="Login benötigt"/>
+        <cc:attribute name="modalID"        />
+        <cc:attribute name="userLable"     default="User"/>
+        <cc:attribute name="user"          required="true" />
+        <cc:attribute name="passwordLable" default="Password"/>
+        <cc:attribute name="password"      required="false" />
+
+        <cc:attribute name="loginLongLife" default="false"/>
+        <cc:attribute name="debug"         default="false"/>
+
+        <cc:attribute name="loginButtonText" default="Login" />
+        <cc:attribute name="loginButtonAction" 
+                      method-signature="java.lang.String action()" />
+
+    </cc:interface>
+
+    <!-- Modal - This Modal is hidden and can invoke by Jquery or a Button -->
+    <cc:implementation>
+
+        <div id="#{cc.attrs.modalID}" class="modal fade"  tabindex="-1" role="dialog">
+            <div class="modal-dialog" style="width: 25%">  
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <h4 class="modal-title">#{cc.attrs.title}</h4>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-body">
+                        <h:form>
+                            <!-- sNote: Show only if the flag "debug" is true or set. -->
+                            <c:if test="#{cc.attrs.debug eq 'true'}"> 
+                                <p>Where i want to go => #{sessionScope.willAccessThisURI}</p>
+                                <p>Bean isLogedin ? #{loginBean.isLoggedin()}</p>
+                            </c:if>
+                            <!-- eNote -->
+
+                            <c:set target="#{loginBean}" property="willAccessThisURI" value="#{sessionScope.willAccessThisURI}" />
+                            <div class="row">
+                                <h:outputLabel styleClass="col-sm-2 lineh30" value="#{cc.attrs.userLable}: " for="userValue"/>
+                                <div class="col-sm-offset-2 col-sm-8">
+                                    <h:inputText id="userValue" class="form-control input-sm" value="#{cc.attrs.user}" required="true" />
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <h:outputLabel styleClass="col-sm-2 lineh30" value="#{cc.attrs.passwordLable}" for="passwordValue"/>
+                                <div class="col-sm-offset-2 col-sm-8">
+                                    <h:inputSecret id="passwordValue" class="form-control input-sm" value="#{cc.attrs.password}" required="true"  /> 
+                                </div>
+                            </div>
+
+                            <!-- sNote: Show only if the flag "loginLongLife" is true or set. -->
+                            <c:if test="#{cc.attrs.loginLongLife eq 'true'}" > 
+                                <div class="row">
+                                    <div class="col-sm-offset-4 col-sm-6 checkbox">
+                                        <label for="checkbox">
+                                            <input id="checkbox" type="checkbox"> Eingeloggt bleiben</input>
+                                        </label>
+                                    </div>
+                                </div>
+                            </c:if>
+                            <!-- eNote -->
+                            <br/>
+                            <div class="row">
+                                <div class="col-sm-offset-4 col-sm-10">
+                                    <h:commandButton value="#{cc.attrs.loginButtonText}" action="#{cc.attrs.loginButtonAction}" />
+                                </div>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </cc:implementation>
+</html>

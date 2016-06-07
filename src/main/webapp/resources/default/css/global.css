@@ -1,0 +1,334 @@
+/*
+    o Alignment
+    o Lineheight
+    o Headlines
+    o Bootstrap
+    o Table
+    o Input
+    o Checkbox
+    o BlurredMenu
+    o Debug
+
+    Created on : 15.05.2015, 12:02:07
+    Author     : mahi
+*/
+html{
+    overflow-y: scroll;   /* Fix Scrollbar Shift */
+    overflow-x:hidden;
+    margin-bottom:0px; 
+}
+html,body {
+    /*height:100%;*/          
+    /* Need for Sidebar and html2canvas 
+       !Problem with scrolling down "überlaenge"
+    */
+}
+
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* 
+    Created on : 28.06.2014, 12:28:11
+    Author     : MaHi
+*/
+
+.header .AdressContainer{
+    text-align: left;  
+    margin-bottom: 20px;
+}
+/* Title */
+.header h1 {  
+    text-align: left;
+    margin:0;
+    font-family: 'Sofia', cursive;
+    font-size: 6em;
+    word-spacing: -0.2em;
+    letter-spacing: -1px;
+    font-weight: 300;
+    color: #292C2C;
+    margin-top: 25px;
+}
+/* SubTitle */
+.header h2 {
+    margin: 0 0 0 10px;
+    font-family: 'Swanky and Moo Moo', cursive;
+    font-size: 3em;
+    color: #4C4C4C;
+    font-weight: 300;
+    margin-bottom: 50px;
+}
+/* Name */
+.header .Autor {
+    font-size: 1.2em;
+    color: #434647;
+    margin-bottom: 0px;
+}
+
+.navigation {
+    background: #F5F5F5;
+    border-top: 1px solid #999;
+    border-bottom: 1px solid #999;
+    margin-bottom: 20px;
+}
+.navigation ul {
+    padding:0;
+    /*margin: 0 0 0 210px;*/
+
+}
+.navigation li {
+    list-style-type: none;
+    float: left; 
+    margin: 0 10px 0 0;
+    padding:0px;
+    text-transform: uppercase;
+    color:#444;
+    font-size: 28px;
+    line-height:28px;
+    border-bottom: 3px solid #eee;
+    line-height: 50px;
+}
+.navigation a:hover li{
+    border-bottom: 3px solid #444;
+}
+.navigation a:link ,
+.navigation a:active ,
+.navigation a:visited {
+}
+.onstartpage{
+    text-align: left;
+    display: block;
+}
+
+.sendMail label,.sendMail input,.sendMail textarea{
+    /*float:left;*/
+    display: block;
+}
+
+/* About/Stony Navigation Style */
+.stony-about-navigation ul{
+    list-style-type: none;
+    padding: 0 0 0 5px;     
+}
+.stony-about-navigation h3{
+    display: inline-block;
+    color: rgb(69, 85, 87);
+    font-size: 18px;
+}
+.stony-about-navigation a:link {
+    text-decoration: none;
+    color: #666;
+    font-size: 14px;
+}
+
+.imagePreviewInfo{
+    float: left;
+    height: 110px;
+    width: 120px;
+    padding: 10px 0 0 0;
+
+}
+.imagePreviewUpload{
+    padding:0;
+    margin: 20px 0 10px 0;
+}
+.imagePreviewInfo p {
+    font-size: 17px;
+    margin: 0px;
+}
+.imagePreview{
+    width: 272px;
+    display: inline-block;
+
+}
+.imagePreview i {
+    float: right;
+    line-height: 23px;
+    margin-right: 10px;
+    margin-right: 10px;
+    font-size: larger;
+}
+.imagePreview img {
+    margin: 10px 0 0 0;
+    display: inline-block;
+    overflow: hidden;
+    padding: 0px;
+    width: 95px;
+    height: 95px;
+}
+
+.navbar-default {
+   background-color:#FFD895 !important;
+}
+
+.admin-add {
+    padding-left: 6px;
+    color: #08A600;
+}
+
+.admin-add-sub{
+    padding-left: 20px;
+    color: #067900;
+}
+.admin-remove{
+    padding-left: 5px;
+    color: #FF8080;
+}
+.admin-remove-sub{
+    padding-left: 20px;
+    color: #FF8080;
+}
+
+
+
+/* ============================================< Alignment >================= */
+.d-center {
+    text-align: center; 
+}
+.d-left {
+    text-align: left; 
+}
+.d-right {
+    text-align: right; 
+}
+/* ============================================< Lineheight >================ */
+.lineh20 {
+    line-height: 20px;
+}
+.lineh30 {
+    line-height: 30px;
+}
+/* ============================================< Headlines >================= */
+
+/* ============================================< Bootstrap >================= */
+
+/* Adding missing "form" Condition for Bootstrap */
+.dropdown-menu>li>form>a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.42857143;
+    color: #333;
+    white-space: nowrap;
+}
+
+/* Global Label Definition - Bootstrap Override */
+label{
+    /*    text-align: left !important;
+        font-weight: normal !important;
+        margin-bottom: 0px !important;*/
+    /* line-height:30px; */
+}
+/* ============================================< Table >===================== */
+
+/* Need for pageloader class */
+.posrela {
+    position: relative;
+}
+
+/* Set Overlay for Page Refresh triggered by jquery */
+.pageloader {
+    position: absolute;
+    width: 110%;
+    height: 100%;
+    z-index: 9999;
+    padding-top: 60px;
+    background: url(../images/ajax-loader.gif?ln=default) 50% 30px no-repeat #fff;
+    text-align: center;
+}
+
+/* ============================================< Input >===================== */
+input[type="button"]:hover, 
+input[type="submit"]:hover {
+    box-shadow:  0 0 0.05em 0.05em #66afe9, 0 0 1px rgba(0, 0, 0, 0);
+}
+
+input[type="button"]:focus, 
+input[type="submit"]:focus {
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,1);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,1);
+}
+/* ============================================< Checkbox >================== */
+/*  Focus on checkboxe.
+    This Class will add dynamically by Jquery.Cause CSS does not allow to change
+    to parent.
+*/
+.label-focus{
+    text-shadow: 1px 1px 10px #66afe9;
+}
+/* ============================================< BlurredMenu >=============== */
+.menu-blurred-main {
+    box-shadow: 5px 5px 30px #000000;
+    position: fixed;
+    top: 0px;
+    left: -7px;
+    width: 0px;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1000;
+    background: #fff;
+}
+
+.menu-content {
+    position: relative;
+}
+
+#blurred-bg-canvas {
+    position: absolute;
+    height: 100% !important;
+}
+
+#captured-image {
+    display: none;
+}
+
+/*
+a nice list inside the blurred menu container
+*/
+.menu-content ul {
+    list-style: outside none none;
+}
+.menu-content ul li {
+    text-indent: 20px;
+    line-height: 40px;
+}
+.menu-content ul li.first {
+    border-top: none;
+}
+.menu-content ul li.last {
+    border-bottom: none;
+}
+/*
+The demo content
+*/
+#content {
+    width: 800px;
+}
+#content img {
+    float: left;
+    padding: 10px 15px 10px 0
+}
+p {
+    clear:both;
+}
+/* ============================================< Debug >===================== */
+
+.yellow{
+    background-color: #CFCDB8;
+}
+.green{
+    background-color: #B8CFC0;
+}
+.blue {
+    background-color: #B8C5CF;
+}
+.purple{
+    background-color: #CFB8BE; 
+}
+.mint{
+    background-color: #B8CFC9; 
+}
+

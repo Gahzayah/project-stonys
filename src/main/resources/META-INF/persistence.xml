@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_1.xsd">
+    <!--
+    <persistence-unit name="pstone-pu" transaction-type="RESOURCE_LOCAL">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <class>org.mahi.persistence.StonyArtMain</class>
+        <class>org.mahi.persistence.StonyArticle</class>
+        <class>org.mahi.persistence.StonyImgMain</class>
+        <class>org.mahi.persistence.StonyImgCat</class>
+        <class>org.mahi.persistence.StonyImages</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://w00f1e28.kasserver.com:3306/d0208342?zeroDateTimeBehavior=convertToNull"/>
+            <property name="javax.persistence.jdbc.user" value="d0208342"/>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.password" value="_techadmin!"/>
+            <property name="javax.persistence.schema-generation.database.action" value="create-or-extend-tables"/>
+        </properties>
+    </persistence-unit>
+    -->
+    <!--    OBJECTDB DATABASE - Configuration -->
+    <!--    The difference between these jars is that objectdb.jar includes 
+    JPA 2 (javax.persistence, etc.) and objectdb-jee.jar doesn't. -->
+    <persistence-unit name="objectDB" transaction-type="JTA">
+        <!--    If you got problems to find correct provider, use version 
+        2.6.2_02 and maven dependecies jta and java persistence -->
+        <provider>com.objectdb.jpa.Provider</provider>
+        <properties>
+            <!--    The $objectdb define the /home directory (normally WEB-INF/lib 
+            It can also be a absolute path or place in the lib of application
+            Server. If the folder named /lib /build /bin the /home will be
+            the parrent directory. -->
+            <property name="javax.persistence.jdbc.url" value="$objectdb/odb/default.odb"/>
+        </properties>
+    </persistence-unit>
+</persistence>

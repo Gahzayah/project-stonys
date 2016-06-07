@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <!--========================================================================
+    *                   
+    * Created:         13.06.2015
+    * File:            dialogLogin.xthml
+    * Author:          Martin Hinrichs Copyright (2015).All rights reserved.
+    *
+    * Function:        JSF-COMPONENT           
+    * Dependecies:     <mahi:dialogLogin ..
+    *                  <.. id="myModal"  ==> in header.xhtml 
+    *
+    * Doc-Ref-Class:   This
+    *
+    * Description:     Administrations-Panel thats can be hidden by jsf rendered
+    *                  Use this Panel to place global Functions for App.
+    * 
+    *
+    =========================================================================-->
+
+    <!--    Define Attributs for the Component-User 
+            The Access at example via cc.attrs.title is special.
+            The "cc" is a reserved Word for the attributs and not related to
+            xmlns:cc=". Remember. -->
+
+    <cc:interface>
+
+        <cc:attribute name="title" default="Admin Lobby"/>
+        <cc:attribute name="user" />
+        <cc:attribute name="linkList" required="true" />
+
+        <cc:attribute name="debug"/>
+
+        <cc:attribute name="logout" 
+                      method-signature="java.lang.String action()" required="true" />
+
+    </cc:interface>
+
+    <!-- Modal - This Modal is hidden and can invoke by Jquery or a Button -->
+    <cc:implementation>
+
+        <h:outputStylesheet library="default" name="css/adm-panel.css" />
+        <h:outputStylesheet library="default" name="css/jquery-dropdown.css" />
+        <h:outputScript     library="default" name="js/jquery-dropdown.js" />
+        <h:outputScript     library="default" name="js/adm-panel.js" />
+
+        <!-- Navigation mit 4 Elementen ( "eingeloggt als" , "Title", "logout", Options-Menu ) -->
+        <div class="adm-panel row">
+            <div class="row shadow hidden-xs hidden-sm hidden-md">
+
+                <div class="col-lg-offset-1 col-lg-2 d-left">eingeloggt als: <h:link>#{cc.attrs.user}</h:link></div>
+                <div class="col-lg-6 d-center"><b>#{cc.attrs.title}</b></div>
+                <div class="col-lg-2 d-right">
+                    <h:form>
+                        <h:commandLink value="logout" action="#{cc.attrs.logout}">
+                            <i class="fa fa-power-off"></i> 
+                        </h:commandLink>
+                    </h:form>
+                </div>
+                <!-- Options-Menü always presented on all devices-->
+                <div class="adm-menu-main col-lg-1 d-center  hidden-xs hidden-sm">
+                    <ul>
+                        <li><a href="#"><i class="fa fa-bars" /></a>
+                            <ul>
+                                <ui:repeat value="#{cc.attrs.linkList}" var="item">
+                                    <li><h:link outcome="#{item.toUrl}" value="#{item.linkName}" /></li>
+                                </ui:repeat>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Options-Menü -->
+            </div>
+        </div>
+
+        <!-- Navigation wird auf 2 Elemente reduziert ("eingeloggt als", Options-Menu ) -->
+        <div class="adm-panel row shadow">
+            <div class="col-xs-12 hidden-lg shadow">
+                <div class="col-xs-8 d-left">eingeloggt als: <h:link>#{cc.attrs.user}</h:link></div>
+                <div class="col-xs-4 d-center menu">
+                    <ul>
+                        <li><a href="#"><i class="fa fa-bars"></i></a>
+                            <ul>
+                                <ui:repeat value="#{cc.attrs.linkList}" var="item">
+                                    <li><h:link outcome="#{item.toUrl}" value="#{item.linkName}" /></li>
+                                </ui:repeat>
+                                <li>
+                                    <h:form>
+                                        <h:commandLink value="logout" action="#{cc.attrs.logout}">
+                                            <i class="fa fa-power-off"></i> 
+                                        </h:commandLink>
+                                    </h:form>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </cc:implementation>
+</html>
+

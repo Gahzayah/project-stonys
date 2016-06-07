@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:mahi="http://java.sun.com/jsf/composite/mycomps"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <ui:decorate template="header.xhtml">
+            <!-- Title Definition -->
+            <title><ui:define name="title">Stonys Glas - Home</ui:define></title>
+        </ui:decorate>
+        <style type="text/css">
+
+        </style>
+    </h:head>
+    <h:body>
+        <f:facet name="last">
+            <h:outputScript     library="default" name="js/modernizr.js"             target="head" />
+            <h:outputScript     library="default" name="js/jquery.gridrotator.js"    target="head" />
+            <h:outputScript     library="default" name="js/global.js"                target="head" />
+
+            <h:outputStylesheet library="default" name="css/gridrotator/custom.grid.css" />
+            <h:outputStylesheet library="default" name="css/typografie.css" />
+            <h:outputStylesheet library="default" name="css/global.css" />
+        </f:facet>
+        <!-- The Panel for Administration on the Top of Page for authenticated users. " -->
+        <mahi:panelAdmin user="#{loginBean.username}" 
+                         search="false" 
+                         logout="#{session.invalidate()}" 
+                         rendered="#{loginBean.isLoggedin()}" />
+        <!-- Show Debug and Validation Messages -->
+        <mahi:panelDebug rendered="#{not empty facesContext.messageList}" />
+
+        <div class="container-fluid" >
+
+            <h:panelGroup layout="block" styleClass="row header">
+                <h:panelGroup layout="block" styleClass="col-md-4 col-md-offset-2">
+                    <h1>Stonys Glas</h1>
+                    <h2>Glaswerksatt am See</h2>
+                </h:panelGroup>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" styleClass="row navigation">
+                <h:panelGroup layout="block" styleClass="col-md-8 col-md-offset-2" style="width: 840px;text-align: center">
+                    <ul>
+                        <h:link outcome="index.xhtml" ><li>Start</li></h:link>
+                        <h:link outcome="stony.xhtml" ><li>Stony</li></h:link>
+                        <h:link outcome="gallerie.xhtml"><li>Galerie</li></h:link>
+                        <h:link outcome="kontakt.xhtml" ><li>Kontakt</li></h:link>
+                    </ul>
+                </h:panelGroup>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" styleClass="row content">
+                <h:panelGroup layout="block" styleClass="col-md-8 col-md-offset-2" style="width:900px">
+                    <h3>Error 404</h3>
+                    <hr/>
+                    <!-- Content -->
+                    <h:panelGroup layout="block" styleClass="col-md-12" style="padding-left: 0px;">
+                        <main>
+                            <section>
+                                <p><b>Die Seite konnte nicht gefunden werden</b></p>
+                                <p>Gründe dafür könnten sein, das Sie eine falsche oder veraltete URL aufgerufen haben - bitte überprüfen sie diese nochmal. Oder aber wir haben die betreffende Seite archiviert , verschoben oder umbenannt.</p>
+                            </section>
+                        </main> 
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGroup>
+        </div>
+
+        <script type="text/javascript" >
+            $(function () {
+
+                $('#ri-grid').gridrotator({
+                    rows: 3,
+                    columns: 3,
+                    animType: 'fadeInOut', // "random" möglich
+                    animSpeed: 1500, // Animation-speed 1,5s
+                    interval: 3500, // Intervall for automatic change 3,5s
+                    onhover: true,
+                    slideshow: true
+                });
+
+            });
+        </script>
+    </h:body>
+</html>
+

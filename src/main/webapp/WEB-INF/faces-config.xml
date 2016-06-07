@@ -1,0 +1,27 @@
+<?xml version='1.0'?> 
+<!-- =========== FULL CONFIGURATION FILE ================================== --> 
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+      http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+              version="2.0">
+    
+    <application>
+        <!-- This ResourceHandler implementation allows the developer to map JSF resources 
+        on an URL pattern of /javax.faces.resource/* 
+        Nice implementation of omnifaces.
+        Dont use library="" tag because its not attach to url ?ln=librayname -->
+        <resource-handler>org.omnifaces.resourcehandler.UnmappedResourceHandler</resource-handler>
+
+        <!--
+        <resource-bundle>
+            <description>
+                Unter 'resources' wird das propertie File angegeben.
+                Achtung nicht /webapp/resources verwenden.
+            </description>
+            <base-name>test</base-name>
+            <var>test2</var>
+        </resource-bundle>
+        -->
+    </application>
+</faces-config>

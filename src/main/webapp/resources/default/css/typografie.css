@@ -1,0 +1,123 @@
+/*  Typografie.css
+*	
+*	Eigeschaften zur Schrift ( Gr??e,Schriftart,Abstand..)
+*	@Autor Martin Hinrichs
+*
+*       Content:
+*       o Main-Font / Second Level Font
+*       o Detail: h1-h4 , p
+*/
+
+/* -- Main-Font */
+body  {
+    font-family: 'Verdana','Lucida console','Georgia' ,sans-serif;
+    font-size: 1em;
+    overflow:hidden; 
+    margin:0;
+    padding:0;
+}
+
+/* -- Headline (H1-H4) */
+h2,h3,h4,h5,h6 {
+    font-family: 'Verdana','Lucida console','Georgia' ,sans-serif;
+    font-weight:bold;
+}
+
+h2 {
+    margin:0;
+    padding:0;
+    font-size: 32px;    /* 24pt   , 2.0em */
+    line-height: 37px;  /* 28pt   , 2.3em */
+    color: #4a7995;
+}
+h3 {
+    margin:0;
+    padding:0;
+    font-size: 22px;    /* 16pt   , 1.4em */
+    line-height: 26px;  /* 20pt   , 1.6em */
+    color: #4C4C4C;
+}
+h4 {
+    margin:0;
+    padding:0;
+    font-size: 18px;    /* 13.5pt , 1.125em */
+    line-height: 24px;  /* 18pt   , 1.5em   */
+    color: rgb(61, 131, 153);
+    /* text-decoration: none; */
+}
+
+/* Paragraph ; */
+p {
+    margin: 0 0 1em 0;
+    padding:0;
+    word-spacing: -0.1em;   
+    font-size: 16px;
+    line-height: 23px;
+    word-spacing: -0.1em;
+    color: #445;
+}
+label{
+    font-size: 14px;
+    color: #666;
+    font-weight: normal;
+    margin: 5px 0px 0px 0px;
+}
+p.intro {
+    font-size: 15px;
+    line-height: 22px;
+    margin: 0px 0px 5px 0px;
+}
+.light{
+    color: #a8b2d1;  
+}
+.normal {
+    color: #445;
+}
+.dark {
+    color: #222;
+}
+
+section ul li {
+    font-size: 14px;
+}
+.AdressSize {
+    font-size: 0.875em; 
+}
+
+.Libre{
+    font-family: 'Libre Baskerville', serif;
+}
+.Gloria {
+    font-family: 'Gloria Hallelujah', cursive;
+}
+.Indie {
+    font-family: 'Indie Flower', cursive;
+}
+.Reenie {
+    font-family: 'Reenie', cursive;
+}
+.Rancho {
+    font-family: 'Rancho', cursive;
+}
+.Love {
+    font-family: 'Love Ya Like A Sister', cursive;
+
+}
+.fontdiner {
+    font-family: 'Fontdiner Swanky', cursive;
+}
+.slacky {
+    font-family: 'Slackey', cursive;
+}
+.swankey {
+    font-family: 'Swanky and Moo Moo', cursive;
+}
+.Sofia {
+    font-family: 'Sofia', cursive;
+}
+.Amarante {
+    font-family: 'Amarante', cursive;
+}
+
+
+

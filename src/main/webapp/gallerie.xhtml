@@ -1,0 +1,368 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:mahi="http://java.sun.com/jsf/composite/mycomps"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <ui:decorate template="header.xhtml">
+            <!-- Title Definition -->
+            <title><ui:define name="title">Stonys Glas - Mehr erfahren</ui:define></title>
+        </ui:decorate>
+        <style type="text/css">
+
+        </style>
+    </h:head>
+    <h:body>
+        <!-- Custom JS/CSS damit hier als letztes laden, damit sie immer funktionieren -->
+        <f:facet name="last">
+            <h:outputStylesheet library="default" name="css/global.css" />
+            <h:outputStylesheet library="default" name="css/typografie.css" />
+            <h:outputStylesheet library="default" name="css/nailthumb/jquery.nailthumb.1.1.css" />
+            <h:outputStylesheet library="default" name="css/lightbox/lightbox.css" />
+            <h:outputScript     library="default" name="js/lightbox.js" target="head" />
+            <h:outputScript     library="default" name="js/jquery.nailthumb.1.1.js" target="head" />
+            <h:outputScript     library="default" name="js/global.js" target="head" />
+        </f:facet>
+        <script type="text/javascript">
+            jQuery(document).ready(function () {
+                jQuery('.nailthumb-container').nailthumb();
+            });
+
+            function monitor(data) {
+                //var statusElement = document.getElementById("status");
+                if (data.status === "begin") {
+                    console.log("ajax-begin:");
+                    statusElement.innerHTML = "Sent request. Waiting for response...";
+                } else if (data.status === "complete") {
+                    console.log("ajax-complete");
+                    statusElement.innerHTML = "Response received";
+                } else if (data.status === "success") {
+                    console.log("ajax-success");
+                    statusElement.innerHTML = "Rendered successfully";
+                    $('#modal-imgCat').modal('close');
+                } else {
+                    console.log("ajax-error");
+                }
+            }
+
+            function clearInputModal() {
+                $("form-control").val('');
+            }
+        </script>
+        <style type="text/css" media="screen">
+            .square-thumb {
+                display: inline-block;
+                width: 120px;
+                height: 120px;
+                margin-right: 10px;
+            }
+        </style>
+        <!-- The Panel for Administration on the Top of Page for authenticated users. " -->
+        <mahi:panelAdmin user="#{loginBean.username}"
+                         logout="#{session.invalidate()}"
+                         search="false"
+                         rendered="#{loginBean.isLoggedin()}" />
+        <!-- Show Debug and Validation Messages -->
+        <mahi:panelDebug rendered="#{not empty facesContext.messageList}" />
+
+        <div class="container-fluid" >
+            <h:panelGroup layout="block" styleClass="row header">
+                <h:panelGroup layout="block" styleClass="col-md-4 col-md-offset-2">
+                    <h1>Stonys Glas</h1>
+                    <h2>Glaswerksatt am See</h2>
+                </h:panelGroup>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" styleClass="row navigation">
+                <h:panelGroup layout="block" styleClass="col-md-8 col-md-offset-2" style="width: 840px;">
+                    <ul>
+                        <h:link outcome="index.xhtml" ><li>Start</li></h:link>
+                        <h:link outcome="stony.xhtml" ><li>Stony</li></h:link>
+                        <h:link outcome="gallerie.xhtml"><li>Galerie</li></h:link>
+                        <h:link outcome="kontakt.xhtml" ><li>Kontakt</li></h:link>
+                    </ul>
+                </h:panelGroup>
+            </h:panelGroup>
+
+            <!-- Modal -->
+            <div  id="modal-imgMain" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Neue Kategorie erstellen</h4>
+                        </div>
+                        <h:form> 
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <h:outputLabel class="control-label" value="Title"/>
+                                    <h:inputText class="form-control" value="#{beanManager.imgMainName}"/>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <h:commandButton styleClass="btn btn-primary" style="width: 30%; height: 32px; margin-right: 15px;" 
+                                                 actionListener="#{beanManager.newImgMain()}" 
+                                                 value="Save" >
+                                </h:commandButton>
+                            </div>
+                        </h:form> 
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div  id="modal-imgCat" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Neue Unterkategorie erstellen</h4>
+                        </div>
+                        <h:form id="imgCatForm" enctype="multipart-data">
+                            <div class="modal-body">
+                                <div class="form-group">                        
+                                    <h:outputLabel class="control-label" value="Kategorie"/>
+                                    <h:outputText value="#{beanManager.imgMain.name}" class="form-control"/>
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel  for="imgcattitle" value="Title" class="control-label" />
+                                    <h:inputText id="imgcattitle" class="form-control" value="#{beanManager.imgCatTitle}" />
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel for="imgcatdesc" value="Description" class="control-label"/>
+                                    <h:inputText id="imgcatdesc" class="form-control" value="#{beanManager.imgCatDesc}"/>
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel value="Vorschau Bild" class="control-label"/>
+                                    <p:fileUpload fileUploadListener="#{beanManager.handleFileUpload}"
+                                                  skinSimple="true" 
+                                                  dragDropSupport="false" 
+                                                  fileLimit="1" 
+                                                  previewWidth="50" 
+                                                  auto="true"/>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <h:commandButton styleClass="btn btn-primary" 
+                                                 style="width: 30%; height: 32px; margin-right: 15px;" 
+                                                 actionListener="#{beanManager.newImgCat()}"  
+                                                 value="Save" >
+                                </h:commandButton>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+
+
+            <h:panelGroup layout="block" styleClass="row content">
+                <h:panelGroup layout="block" styleClass="col-md-8 col-md-offset-2" style="width:900px">
+                    <h:form id="imgForm">
+                        <!-- ooooooooooooooooooooooooooooooooooo Title ooooooooooooooooooooooooooooooooooooooooo -->
+                        <h:panelGroup layout="block" styleClass="col-md-8" style="padding-top: 7px;">
+
+                            <c:choose>
+                                <c:when test="#{empty beanManager.imgCat}">
+                                    <h3 style="display: inline-block;">#{beanManager.imgMain.name}</h3>
+                                </c:when>
+                                <c:otherwise>
+                                    <h3 style="display: inline-block;">#{beanManager.imgCat.name}</h3>
+                                </c:otherwise>
+                            </c:choose>
+
+                            <h:panelGroup style="float:right">
+                                <!-- Entscheide ob die Gallery eine Start-Gallery ist und zeige Farbe/Symbol entsprechend -->
+                                <c:choose>
+                                    <c:when test="#{beanManager.imgMain.startHexRGB eq '#08A600'}" >
+                                        <h:panelGroup class="glyphicon glyphicon-ok" style="color: #{beanManager.imgMain.startHexRGB};margin-right:5px" rendered="#{loginBean.loggedin}"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <h:panelGroup class="glyphicon glyphicon-minus" style="color: #{beanManager.imgMain.startHexRGB};margin-right:5px" rendered="#{loginBean.loggedin}"/>
+                                    </c:otherwise>
+                                </c:choose>
+                                <!-- Setze mit dem Button den Start-Gallery -->
+                                <h:commandLink style="margin-right:10px"                                          
+                                               value="Start-Gallery"
+                                               actionListener="#{beanManager.setStartGallery()}"
+                                               rendered="#{loginBean.loggedin and not empty beanManager.imgMain}"/>
+                                <c:choose>
+                                    <c:when test="#{beanManager.imgMain.hiddenGallery}" >
+                                        <h:panelGroup class="glyphicon glyphicon-ok" style="color:#08A600;margin-right:5px" rendered="#{loginBean.loggedin}"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <h:panelGroup class="glyphicon glyphicon-minus" style="color:#F5F5F5;margin-right:5px" rendered="#{loginBean.loggedin}"/>
+                                    </c:otherwise>
+                                </c:choose>
+                                <h:commandLink style="margin-right:10px"                                          
+                                               value="Versteck-Gallery"
+                                               actionListener="#{beanManager.setHiddenGallery()}"
+                                               rendered="#{loginBean.loggedin and not empty beanManager.imgMain}"/>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="col-md-4" >&#160;</h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="col-md-12" ><hr/></h:panelGroup>
+                        <!-- ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
+
+                        <!-- Content -->
+                        <h:panelGroup id="gallery-content" layout="block" styleClass="col-md-8">
+                            <c:choose>
+                                <c:when test="#{empty beanManager.imgCat and not empty beanManager.imgMain}" >
+
+                                    <!-- ooooooooooooooooooooooooooooooooooooo Image Kategorie Left Side ooooooooooooooooooooooooooooooooooooooooo -->
+                                    <c:forEach items="#{beanManager.imgMain.imgCatList}" var="imgCat">
+                                        <div class="imagePreview">
+                                            <div style="display:inline-block;padding-left: 15px;" >
+                                                <h:commandLink  actionListener="#{beanManager.setThisImgCat(imgCat)}">
+                                                    <p:graphicImage url="/gallery/getImage?imgCat=#{imgCat.id}" alt="#{imgCat.name}"  title="#{imgCat.description}"/>
+                                                    <f:ajax render=":imgForm"/>
+                                                </h:commandLink>
+                                            </div>
+                                            <div style="display:inline-block;height: 110px" class="imagePreviewInfo">
+                                                <div> 
+                                                    <h:commandLink  actionListener="#{beanManager.setThisImgCat(imgCat)}">
+                                                        <p style="display:inline-block">#{imgCat.name}</p>
+                                                        <f:ajax render=":imgForm"/>
+                                                    </h:commandLink>
+
+                                                </div>
+                                                <div>#{imgCat.images.size()} Fotos</div>
+                                                <c:if test="#{loginBean.loggedin}">
+                                                    <a href="#" title="Neue Sub-Kategorie hinzufügen" data-target="#modal-imgCat-#{beanManager.imgMain.id}" style="display:none">
+                                                        <i class="glyphicon glyphicon-wrench" />
+                                                    </a>
+                                                </c:if>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                    <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooOOOOOOOOOOOOoooooooo -->
+
+                                </c:when>
+                                <c:otherwise>
+                                    <!-- oooooooooooooooooooooooooooooooooooooooooo Images Left Side oooooooooooooooooooooooooooooooooooooooooo -->
+                                    <h:panelGroup layout="block" styleClass="imagePreview" style="width:100%;display:block;margin-bottom: 25px;" rendered="#{loginBean.loggedin}">
+                                        <div class="imagePreviewUpload">
+                                            <p style="margin:0;">Neue Bilder</p>
+                                            einzeln oder mehrere hochladen!
+                                        </div>
+                                        <p:fileUpload multiple="true" fileUploadListener="#{beanManager.saveImages}" fileLimit="0" mode="advanced" update="imgForm gallery-bilder"/>
+                                    </h:panelGroup>
+                                    <p:outputPanel id="gallery-bilder">
+                                        <c:forEach items="#{beanManager.imgCat.images}" var="image">
+                                            <div class="nailthumb-container square-thumb">
+                                                <a href="#{request.contextPath}/gallery/getImage?img=#{image.id}" data-lightbox="${image.imgCat.name}" data-title="${image.description}" class="link-image" >
+                                                    <p:graphicImage url="/gallery/getImage?imgPrev=#{image.id}" alt="#{image.name}"  title="#{image.description}"/><span>x</span>
+                                                </a>
+                                            </div>
+                                        </c:forEach>
+                                    </p:outputPanel>
+                                    <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooOOOOOOOOOOOOoooooooo -->
+                                </c:otherwise>
+                            </c:choose>
+                        </h:panelGroup>
+                    </h:form>
+
+                    <h:panelGroup id="gallery-navigation" layout="block" styleClass="col-md-4 stony-about-navigation">
+                        <ul>
+                            <!-- Alle Gallery Gruppen ausgeben -->
+                            <c:choose>
+                                <!-- Wenn eingeloggt die Hidden Kategorien mit ausgeben -->
+                                <c:when test="#{loginBean.loggedin}">
+                                    <ui:repeat value="#{beanManager.imgMainListAll}" var="imgMain">
+                                        <li>
+                                            <h:form>
+                                                <h:commandLink actionListener="#{beanManager.removeImgMain(imgMain)}" rendered="#{loginBean.loggedin and !imgMain.hiddenGallery and not empty beanManager.imgMain}">
+                                                    <div class="glyphicon glyphicon-minus admin-remove"/>
+                                                </h:commandLink>
+                                                <h:panelGroup class="glyphicon glyphicon-asterisk" style="color:#66afe9;padding-left: 5px;" rendered="#{imgMain.hiddenGallery}"/>
+                                                <!-- Button to set  Kategorie ImgMain to Show -->
+                                                <h:commandLink actionListener="#{beanManager.setThisImgMain(imgMain)}">
+                                                    <h3>#{imgMain.name}</h3>
+                                                </h:commandLink>
+                                            </h:form>
+                                            <ul>
+                                                <!-- Alle enthaltenen Image Kategorien ausgeben -->
+                                                <ui:repeat value="#{imgMain.imgCatList}" var="imgCat">
+                                                    <li>
+                                                        <h:form>
+                                                            <h:commandLink actionListener="#{beanManager.removeImgCat(imgCat)}" rendered="#{loginBean.loggedin and not empty beanManager.imgMain}">
+                                                                <div class="glyphicon glyphicon-minus admin-remove-sub"/>
+                                                            </h:commandLink>
+                                                            <!-- Button to set  Sub-Kategorie ImgCat to Show -->
+                                                            <h:commandLink actionListener="#{beanManager.setThisImgCat(imgCat)}">
+                                                                <h:outputText>#{imgCat.name}</h:outputText>
+                                                                <f:ajax render=":imgForm"/>
+                                                            </h:commandLink>
+                                                        </h:form>
+                                                    </li>
+                                                </ui:repeat>
+                                                <li>
+                                                    <h:form>
+                                                        <h:commandLink  actionListener="#{beanManager.setThisImgMain(imgMain)}" title="Neue Sub-Kategorie hinzufügen" rendered="#{loginBean.loggedin}">
+                                                            <div class="admin-add-sub"><i class="glyphicon glyphicon-plus"/><span style="font-size: 12px;margin-left: 5px;">Neue&#160;Sub-Kategorie</span></div>
+                                                            <p:ajax onsuccess="$('#modal-imgCat').modal()" update=":imgForm :imgCatForm" />
+                                                        </h:commandLink>
+                                                    </h:form>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ui:repeat>
+                                    <a href="#" title="Neue Kategorie hinzufügen"><div class="admin-add" data-toggle="modal" data-target="#modal-imgMain" ><i class="glyphicon glyphicon-plus"/><span style="font-size: 12px;margin-left: 5px;">Neue&#160;Kategorie</span></div></a>
+                                </c:when>
+                                <c:otherwise>
+                                    <ui:repeat value="#{beanManager.imgMainListNotHidden}" var="imgMain">
+                                        <li>
+                                            <h:form>
+                                                <h:commandLink actionListener="#{beanManager.removeImgMain(imgMain)}" rendered="#{loginBean.loggedin}">
+                                                    <div class="glyphicon glyphicon-minus admin-remove"/>
+                                                </h:commandLink>
+                                                <!-- Button to set  Kategorie ImgMain to Show -->
+                                                <h:commandLink actionListener="#{beanManager.setThisImgMain(imgMain)}">
+                                                    <h3>#{imgMain.name}</h3>
+                                                </h:commandLink>
+                                            </h:form>
+
+                                            <ul>
+                                                <!-- Alle Sub-Kategorien ausgeben -->
+                                                <ui:repeat value="#{imgMain.imgCatList}" var="imgCat">
+                                                    <li>
+                                                        <h:form>
+                                                            <h:commandLink actionListener="#{beanManager.removeImgCat(imgCat)}" rendered="#{loginBean.loggedin}">
+                                                                <div class="glyphicon glyphicon-minus admin-remove-sub"/>
+                                                            </h:commandLink>
+                                                            <!-- Button to set  Sub-Kategorie ImgCat to Show -->
+                                                            <h:commandLink actionListener="#{beanManager.setThisImgCat(imgCat)}">
+                                                                <h:outputText>#{imgCat.name}</h:outputText>
+                                                                <f:ajax render=":imgForm :imgCatForm"/>
+                                                            </h:commandLink>
+                                                        </h:form>
+                                                    </li>
+                                                </ui:repeat>
+                                                <li>
+                                                    <h:form>
+                                                        <h:commandLink actionListener="#{beanManager.setThisImgMain(imgMain)}" title="Neue Sub-Kategorie hinzufügen" rendered="#{loginBean.loggedin}">
+                                                            <div class="admin-add-sub"><i class="glyphicon glyphicon-plus"/><span style="font-size: 12px;margin-left: 5px;">Neue&#160;Sub-Kategorie</span></div>
+                                                            <p:ajax onsuccess="$('#modal-imgCat').modal()" update=":imgForm :imgCatForm"/>
+                                                        </h:commandLink>
+                                                    </h:form>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ui:repeat>
+                                </c:otherwise>
+                            </c:choose>
+                        </ul>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGroup>
+        </div>
+    </h:body>
+</html>

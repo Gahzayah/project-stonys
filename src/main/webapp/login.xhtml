@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"         
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:mahi="http://java.sun.com/jsf/composite/mycomps"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+        <ui:decorate template="header.xhtml">
+            <title><ui:define name="title">Sicherer Bereich</ui:define></title>
+        </ui:decorate>
+        <!-- The LoginFilter will set the request Attribut and send this via RequestDispatcher
+            back to the client -->
+        <!--<c:if test="{requestScope.statuscode eq '401'}"> -->
+        <c:if test="#{!loginBean.loggedin}">
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#dialogLogin').modal('show');
+
+                    $('#dialogLogin').on('hidden.bs.modal', function () {
+                        window.location = "http://localhost:8079/lab/pages/framework.xhtml"
+                    });
+                });
+            </script>
+        </c:if>
+    </h:head>
+    <h:body>
+        <mahi:dialogLogin modalID="dialogLogin" user="#{loginBean.username}" password="#{loginBean.password}" loginButtonAction="#{loginBean.doLogin}" />
+    </h:body>
+</html>

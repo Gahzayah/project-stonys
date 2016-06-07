@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:mahi="http://java.sun.com/jsf/composite/mycomps"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <ui:decorate template="header.xhtml">
+            <!-- Title Definition -->
+            <title><ui:define name="title">Stonys Glas - Kontakt</ui:define></title>
+        </ui:decorate>
+        <style type="text/css">
+
+        </style>
+    </h:head>
+    <h:body>
+        <!-- Custom JS/CSS damit hier als letztes laden, damit sie immer funktionieren -->
+        <f:facet name="last">
+            <h:outputStylesheet library="default" name="css/global.css" />
+            <h:outputStylesheet library="default" name="css/typografie.css" />
+            <h:outputScript     library="default" name="js/global.js" target="head" />
+        </f:facet>
+        <!-- The Panel for Administration on the Top of Page for authenticated users. " -->
+        <mahi:panelAdmin user="#{loginBean.username}" 
+                         search="false" 
+                         logout="#{session.invalidate()}" 
+                         rendered="#{loginBean.isLoggedin()}" />
+        <!-- Show Debug and Validation Messages -->
+        <mahi:panelDebug rendered="#{not empty facesContext.messageList}" /> 
+
+        <div class="container-fluid" >
+            <h:panelGroup layout="block" styleClass="row header">
+                <h:panelGroup layout="block" styleClass="col-md-4 col-md-offset-2">
+                    <h1>Stonys Glas</h1>
+                    <h2>Glaswerksatt am See</h2>
+                </h:panelGroup>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" styleClass="row navigation">
+                <h:panelGroup layout="block" styleClass="col-md-8 col-md-offset-2" style="width: 840px;">
+                    <ul>
+                        <h:link outcome="index.xhtml" ><li>Start</li></h:link>
+                        <h:link outcome="stony.xhtml" ><li>Stony</li></h:link>
+                        <h:link outcome="gallerie.xhtml"><li>Galerie</li></h:link>
+                        <h:link outcome="kontakt.xhtml" ><li>Kontakt</li></h:link>
+                    </ul>
+                </h:panelGroup>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" styleClass="row content">
+                <h:panelGroup layout="block" styleClass="col-md-8 col-md-offset-2" style="width:900px">
+                    <h3>Kontaktieren sie mich!</h3>
+                    <hr/>
+                    <div class="AdressContainer">
+                        <p class='Autor' style="margin-bottom:0">Barbara Steiner</p>
+                        <p class='Autor'>Seestr. 52a , 6375 Beckenried</p>
+                    </div>
+                    <hr/>
+                    <!-- Content -->  
+                    <h:form id="sendMail">
+                        <h:panelGroup id="messageWrite" layout="block" styleClass="col-md-12 form-group" style="padding-left: 0px;" rendered="#{!beanManager.sendMailDone}">
+                            <p>Falls Sie Unterstützung benötigen, die gesuchten Informationen nicht findest oder einen Fehler entdeckt haben.
+                                Falls Sie Informationen zu einzelnen Austellungsstücken brauchen oder Fragen zu Workshops und Terminen haben.</p>  
+                            <h:panelGroup layout="block" styleClass="form-group"> 
+                                <h:outputLabel for="contact-mail-name" class="control-label"    value="Name" />
+                                <h:inputText   id="contact-mail-name" class="form-control"     value="#{beanManager.name}"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block" styleClass="form-group">
+                                <h:outputLabel for="contact-mail-addr" class="control-label"    value="Email"/>
+                                <h:inputText   id="contact-mail-addr" class="form-control"     value="#{beanManager.email}"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block" styleClass="form-group">
+                                <h:outputLabel   for="contact-mail-content" class="control-label"  value="Nachricht"/>
+                                <h:inputTextarea id="contact-mail-content" class="form-control"   value="#{beanManager.nachricht}" title="Nachricht" rows="10" cols="70"  />
+                            </h:panelGroup>
+                            <h:panelGroup layout="block" styleClass="form-group">
+                                <h:commandButton value="Senden" styleClass="btn btn-default" actionListener="#{beanManager.sendMail()}" type="submit">
+                                    <f:ajax execute="@form" render="sendMail :messageDone"/>
+                                </h:commandButton>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </h:form>
+                    <h:form id="messageDone">
+                        <h:panelGroup layout="block" styleClass="col-md-12" style="padding-left: 0px;" rendered="#{beanManager.sendMailDone}">
+                            <p>Nachricht erfolgreich gesendet.</p>
+                        </h:panelGroup>
+                    </h:form>
+                </h:panelGroup>
+            </h:panelGroup>
+        </div>
+    </h:body>
+</html>
+

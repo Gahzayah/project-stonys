@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:mahi="http://java.sun.com/jsf/composite/mycomps"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <ui:decorate template="header.xhtml">
+            <!-- Title Definition -->
+            <title><ui:define name="title">Stonys Glas - Home</ui:define></title>
+        </ui:decorate>
+        <script type="text/javascript">
+                jQuery(document).ready(function () {
+                    $('#ri-grid').gridrotator({
+                    rows: 3,
+                    columns: 3,
+                    animType: 'fadeInOut', // "random" möglich
+                    animSpeed: 1500, // Animation-speed 1,5s
+                    interval: 3500, // Intervall for automatic change 3,5s
+                    onhover: true,
+                    slideshow: true
+                });
+            });
+        </script>
+    </h:head>
+    <h:body>
+        <f:facet name="last">
+            <h:outputScript     library="default" name="js/modernizr.js"             target="head" />
+            <h:outputScript     library="default" name="js/jquery.gridrotator.js"    target="head" />
+            <h:outputScript     library="default" name="js/global.js"                target="head" />
+
+            <h:outputStylesheet library="default" name="css/gridrotator/custom.grid.css" />
+            <h:outputStylesheet library="default" name="css/typografie.css" />
+            <h:outputStylesheet library="default" name="css/global.css" />
+        </f:facet>
+        <!-- The Panel for Administration on the Top of Page for authenticated users. " -->
+        <mahi:panelAdmin user="#{loginBean.username}" 
+                         logout="#{session.invalidate()}" 
+                         rendered="#{loginBean.isLoggedin()}" />
+        <!-- Show Debug and Validation Messages -->
+        <mahi:panelDebug rendered="#{not empty facesContext.messageList}" />
+
+        <div class="container-fluid" >
+
+            <h:panelGroup layout="block" styleClass="row header">
+                <h:panelGroup layout="block" styleClass="col-md-4 col-md-offset-2">
+                    <h1>Stonys Glas</h1>
+                    <h2>Glaswerksatt am See</h2>
+                </h:panelGroup>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" styleClass="row navigation">
+                <h:panelGroup layout="block" styleClass="col-md-8 col-md-offset-2" style="width: 840px;text-align: center">
+                    <ul>
+                        <h:link outcome="index.xhtml" ><li>Start</li></h:link>
+                        <h:link outcome="stony.xhtml" ><li>Stony</li></h:link>
+                        <h:link outcome="gallerie.xhtml"><li>Galerie</li></h:link>
+                        <h:link outcome="kontakt.xhtml" ><li>Kontakt</li></h:link>
+                    </ul>
+                </h:panelGroup>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" styleClass="row content">
+                <h:panelGroup layout="block" styleClass="col-md-8 col-md-offset-2" style="width:900px">
+                    <h3>&nbsp;</h3>
+                    <hr/>
+                    <!-- Content -->
+                    <h:panelGroup layout="block" styleClass="col-md-6" style="width: 420px;padding-left: 0px;">
+                        <div id="ri-grid" class="ri-grid" >
+                            <h:graphicImage class="ri-loading-image"  library="default"  name="images/system/ajax-loader.gif" />
+                            <ul> 
+                                <li><h:link outcome="gallerie.xhtml" ><h:graphicImage library="default" name="images/gridrotator/1.jpg" /></h:link></li>
+                                <li><h:link outcome="gallerie.xhtml" ><h:graphicImage library="default" name="images/gridrotator/2.jpg" /></h:link></li>
+                                <li><h:link outcome="gallerie.xhtml" ><h:graphicImage library="default" name="images/gridrotator/3.jpg" /></h:link></li>
+                                <li><h:link outcome="gallerie.xhtml" ><h:graphicImage library="default" name="images/gridrotator/4.jpg" /></h:link></li>
+                                <li><h:link outcome="gallerie.xhtml" ><h:graphicImage library="default" name="images/gridrotator/5.jpg" /></h:link></li>
+                                <li><h:link outcome="gallerie.xhtml" ><h:graphicImage library="default" name="images/gridrotator/6.jpg" /></h:link></li>
+                                <li><h:link outcome="gallerie.xhtml" ><h:graphicImage library="default" name="images/gridrotator/7.jpg" /></h:link></li>
+                                <li><h:link outcome="gallerie.xhtml" ><h:graphicImage library="default" name="images/gridrotator/8.jpg" /></h:link></li>
+                                <li><h:link outcome="gallerie.xhtml" ><h:graphicImage library="default" name="images/gridrotator/9.jpg" /></h:link></li>
+                                <li><h:link outcome="gallerie.xhtml" ><h:graphicImage library="default" name="images/gridrotator/10.jpg" /></h:link></li>
+                                <li><h:link outcome="gallerie.xhtml" ><h:graphicImage library="default" name="images/gridrotator/11.jpg" /></h:link></li>
+                                <li><h:link outcome="gallerie.xhtml" ><h:graphicImage library="default" name="images/gridrotator/12.jpg" /></h:link></li>
+                                <li><h:link outcome="gallerie.xhtml" ><h:graphicImage library="default" name="images/gridrotator/13.jpg" /></h:link></li>
+                                <li><h:link outcome="gallerie.xhtml" ><h:graphicImage library="default" name="images/gridrotator/14.jpg" /></h:link></li>
+                                <li><h:link outcome="gallerie.xhtml" ><h:graphicImage library="default" name="images/gridrotator/15.jpg" /></h:link></li>
+                                <li><h:link outcome="gallerie.xhtml" ><h:graphicImage library="default" name="images/gridrotator/16.jpg" /></h:link></li>
+                                <li><h:link outcome="gallerie.xhtml" ><h:graphicImage library="default" name="images/gridrotator/17.jpg" /></h:link></li>
+                                <li><h:link outcome="gallerie.xhtml" ><h:graphicImage library="default" name="images/gridrotator/18.jpg" /></h:link></li>
+                            </ul>
+                        </div> 
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="col-md-6 onstartpage" style="width: 420px">
+                        <h3>Die Glaswerkstatt am See</h3>
+                        <br/>
+                        <div class="index-article" style="font-size: 14px;">
+                            <p>Immer auf der Suche nach kreativer Beschäftigung,geschürt von Neugier, Begeisterung und Energie.</p>
+                            <p>Viele Jahre habe ich nach einer Freizeit-Beschäftigung gesucht, die als Ausgleich zu meinem oft turbulenten Beruf, Freude, Licht und Sonnenschein in mein Leben bringt. 
+
+                                Ich habe es gefunden in Form von “heissem Glas“ </p>
+                            <p>Lassen Sie sich bezaubern von den Formen und Farben, von den Geschichten und Emotionen.</p>
+
+                        </div>
+                        <!--</c:when>-->
+                        <!--<c:otherwise>
+                            <div>
+                                {art.text}
+                            </div> 
+                        </c:otherwise> -->
+                        <!--</c:choose>     -->
+                        <!--</c:forEach>-->
+                    </h:panelGroup>
+                    <!-- Content -->
+                </h:panelGroup>
+            </h:panelGroup>
+        </div>
+    </h:body>
+</html>
+

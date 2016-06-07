@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true" cookies="true" path="/ps">
+  <!--
+    <Resource auth="container" 
+              driverClassName="com.mysql.jdbc.Driver" 
+              logAbandoned="true" 
+              maxActive="100" 
+              maxIdle="30" 
+              maxWait="10000" 
+              name="allinkl_mysql" 
+              password="_techadmin!" 
+              removeAbandoned="true" 
+              removeAbandonedTimeout="60" 
+              type="javax.sql.DataSource" 
+              url="jdbc:mysql://w00f1e28.kasserver.com:3306/d01a6a79" 
+              username="d01a6a79"/>
+              
+  
+    <Realm className="org.apache.catalina.realm.DataSourceRealm" 
+           dataSourceName="allinkl_mysql" 
+           debug="99" 
+           localDataSource="true" 
+           roleNameCol="Rolename" 
+           userCredCol="Password" 
+           userNameCol="Username" 
+           userRoleTable="UserRole" 
+           userTable="UserPass"/>
+    -->
+</Context>

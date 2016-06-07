@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:composition>
+        <!-- favicon accessible by <h:graphicImage name="images/favicon.ico"> -->
+        <link rel="shortcut icon" type="image/x-icon" href="#{resource['default/images/favicon.ico']}"/>
+        <link href='http://fonts.googleapis.com/css?family=Sofia' rel='stylesheet' type='text/css'/>
+        <link href='http://fonts.googleapis.com/css?family=Swanky+and+Moo+Moo' rel='stylesheet' type='text/css'/>
+        <link href='http://fonts.googleapis.com/css?family=Sofia' rel='stylesheet' type='text/css'/>
+
+        <title><ui:insert name="title"></ui:insert></title>
+
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- Suchmaschinen Configuration -->
+        <meta name="keywords" content="Glas, Kunst, Herstellung, Fusing, Workshops , Schulung, Objekte , schmelzen , Ofen " />
+
+        <!-- All Javascript Libraries to body Element to fix Primefaces Dominanz 
+            http://stackoverflow.com/questions/9597025/how-to-override-primefaces-jquery-and-css
+        
+        -->
+        <h:outputScript library="primefaces" name="jquery/jquery.js"         target="head" />
+        <h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />
+
+        <h:outputScript name="webjars/bootstrap/3.3.5/dist/js/bootstrap.min.js" />
+
+        <h:outputStylesheet name="webjars/bootstrap/3.3.5/dist/css/bootstrap.min.css" />
+        <h:outputStylesheet library="default" name="css/typografie.css" />
+
+        <ui:insert name="libraries"></ui:insert>
+
+    </ui:composition>
+
+</html>
+

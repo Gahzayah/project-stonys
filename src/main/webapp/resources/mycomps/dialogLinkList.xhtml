@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <!--========================================================================
+    *                   
+    * Created:         13.06.2015
+    * File:            dialogEditLinkList.xthml
+    * Author:          Martin Hinrichs Copyright (2015).All rights reserved.
+    *
+    * Function:        JSF-COMPONENT           
+    * Dependecies:     <mahi:dialogEditLinkList ..
+    *
+    * Doc-Ref-Class:   dialogLogin.xhtml
+    *
+    * Description:     Edit Dialog build with Primefaces Modal.
+    *                  invoke through:
+    *                       o onEvent="PF('myModalID').show();"
+    *
+    * 
+    * Style CSS Def:   width = 35 %;
+    *
+    =========================================================================-->
+
+    <!--    Define Attributs for the Component-User 
+            The Access at example via cc.attrs.title is special.
+            The "cc" is a reserved Word for the attributs and not related to
+            xmlns:cc=". Remember. -->
+    <cc:interface>
+        <cc:attribute name="modalID"        required="true" />
+        <cc:attribute name="title"          required="true"/>
+        <cc:attribute name="label_selectOne"   />
+        <cc:attribute name="value_selectOne"   />
+        <cc:attribute name="valueChangeListener" />
+        <cc:attribute name="label_inputOne"  />
+        <cc:attribute name="value_inputOne"   />
+        <cc:attribute name="label_inputTwo"  />
+        <cc:attribute name="value_inputTwo"   />
+        <cc:attribute name="label_inputThree"   />
+        <cc:attribute name="value_inputThree"    />
+
+        <cc:attribute name="debug" />
+
+        <cc:attribute name="buttonLable" />
+        <cc:attribute name="buttonAction" 
+                      method-signature="java.lang.String actionListener()" />
+    </cc:interface>
+
+    <!-- Modal - This Modal is hidden and can invoke by Jquery or a Button -->
+    <cc:implementation>
+
+        <!-- USE Primefaces -->
+        <!-- This Component will be render from outside -->
+        <div id="#{cc.clientId}">
+            <p:dialog header="#{cc.attrs.title}" widgetVar="#{cc.attrs.modalID}" 
+                      resizable="false"
+                      closeOnEscape="true"
+                      footer="Press Esc to Close"
+                      draggable="false" >
+
+                <!-- The Content of the Dialog. -->
+                <h:form>
+                    <!-- SelectOneMenu -->
+                    <h:panelGroup class="row" layout="block" rendered="#{not empty cc.attrs.label_selectOne}">
+                        <h:outputLabel styleClass="col-sm-4 lineh30" value="#{cc.attrs.label_selectOne}" for="groupValue" />
+                        <div class="col-sm-8">
+                            <h:selectOneMenu valueChangeListener="#{cc.attrs.valueChangeListener}">
+                                <f:selectItems value="#{cc.attrs.value_selectOne}" var="o" itemValue="#{o.id}" itemLabel="#{o.groupName}" />
+                                <f:ajax />
+                            </h:selectOneMenu>
+                        </div>
+                    </h:panelGroup>
+                    <!-- InputOne -->
+                    <h:panelGroup class="row" layout="block" rendered="#{not empty cc.attrs.label_inputOne}">
+                        <h:outputLabel styleClass="col-sm-4 lineh30" value="#{cc.attrs.label_inputOne}" for="linkNameValue" />
+                        <div class="col-sm-8">
+                            <h:inputText id="linkNameValue" class="form-control input-sm" value="#{cc.attrs.value_inputOne}" /> 
+                        </div>
+                    </h:panelGroup>
+                    <!-- InputTwo -->
+                    <h:panelGroup class="row" layout="block" rendered="#{not empty cc.attrs.label_inputTwo}">
+                        <h:outputLabel styleClass="col-sm-4 lineh30" value="#{cc.attrs.label_inputTwo}" for="fromViewValue"/>
+                        <div class="col-sm-8">
+                            <h:inputText id="fromViewValue" class="form-control input-sm" value="#{cc.attrs.value_inputTwo}" />
+                        </div>
+                    </h:panelGroup>
+                    <!-- InputThree -->
+                    <h:panelGroup class="row" layout="block" rendered="#{not empty cc.attrs.label_inputThree}">
+                        <h:outputLabel styleClass="col-sm-4 lineh30" value="#{cc.attrs.label_inputThree}" for="urlNameValue"/>
+                        <div class="col-sm-8">
+                            <h:inputText id="urlNameValue" class="form-control input-sm" value="#{cc.attrs.value_inputThree}" />
+                        </div>
+                    </h:panelGroup>
+
+                    <div class="row">
+                        <div class="col-sm-offset-4 col-sm-8">
+                            <p:commandButton 
+                                value="#{cc.attrs.buttonLable}" 
+                                actionListener="#{cc.attrs.buttonAction}"
+                                update="myTable LinkGroupTable"
+                                onerror="errorXHR"
+                                oncomplete="PF('#{cc.attrs.modalID}').hide();debugXHR"
+                                />
+                        </div>
+                    </div>
+                </h:form> 
+
+            </p:dialog>
+        </div>
+
+
+    </cc:implementation>
+</html>

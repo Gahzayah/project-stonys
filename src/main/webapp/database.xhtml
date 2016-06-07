@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:mahi="http://java.sun.com/jsf/composite/mycomps"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <ui:decorate template="header.xhtml">
+            <!-- Title Definition -->
+            <title><ui:define name="title">Database</ui:define></title>
+        </ui:decorate>
+        <style type="text/css">
+
+        </style>
+    </h:head>
+    <h:body>
+        <!-- Custom JS/CSS damit hier als letztes laden, damit sie immer funktionieren -->
+        <f:facet name="last">
+            <h:outputStylesheet library="default" name="css/global.css" />
+            <h:outputStylesheet library="default" name="css/typografie.css" />
+            <h:outputScript     library="default" name="js/global.js" target="head" />
+        </f:facet>
+        <!-- The Panel for Administration on the Top of Page for authenticated users. " -->
+        <mahi:panelAdmin user="#{loginBean.username}" 
+                         search="false" 
+                         logout="#{session.invalidate()}" 
+                         rendered="#{loginBean.isLoggedin()}" />
+        <!-- Show Debug and Validation Messages -->
+        <mahi:panelDebug rendered="#{not empty facesContext.messageList}" />
+
+        <div class="container-fluid" >
+            <h:panelGroup layout="block" styleClass="row header">
+                <h:panelGroup layout="block" styleClass="col-md-4 col-md-offset-2">
+                    <h1>Stonys Glas</h1>
+                    <div class="AdressContainer">
+                        <p class='Autor'>Barbara Steiner</p>
+                        <p class='Autor'>Seestr. 52a , 6375 Beckenried</p>
+                    </div>
+                </h:panelGroup>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" styleClass="row navigation">
+                <h:panelGroup layout="block" styleClass="col-md-8 col-md-offset-2" style="width: 840px;">
+                    <ul>
+                        <h:link outcome="index.xhtml" ><li>Start</li></h:link>
+                        <h:link outcome="stony.xhtml" ><li>Stony</li></h:link>
+                        <h:link outcome="gallerie.xhtml"><li>Galerie</li></h:link>
+                        <h:link outcome="kontakt.xhtml" ><li>Kontakt</li></h:link>
+                    </ul>
+                </h:panelGroup>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" styleClass="row content">
+                <h:panelGroup layout="block" styleClass="col-md-12 col-md-offset-2" style="width:900px">
+                    <h:form>
+                        <h:commandButton actionListener="#{beanManager.restoreDatabase()}" value="all images" />
+                    </h:form>
+
+                </h:panelGroup>
+            </h:panelGroup>
+        </div>
+    </h:body>
+</html>
